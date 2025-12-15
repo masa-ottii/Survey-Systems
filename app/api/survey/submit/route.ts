@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { InputJsonArray } from '@prisma/client/runtime/library'
 
 export async function POST(request: NextRequest) {
   try {

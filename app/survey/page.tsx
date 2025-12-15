@@ -1,6 +1,9 @@
 import { prisma } from '@/lib/prisma'
 import { SurveyForm } from '@/components/survey-form'
 
+// 3600秒ごとにページを再検証（キャッシュを更新）
+export const revalidate = 3600
+
 export default async function SurveyPage() {
   try {
     const questions = await prisma.question.findMany({
@@ -8,9 +11,6 @@ export default async function SurveyPage() {
         order: 'asc',
       },
     })
-    console.log('********');
-    console.log(questions);
-    console.log('--------');
 
     if (questions.length === 0) {
       return (
