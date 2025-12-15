@@ -8,6 +8,9 @@ export default async function SurveyPage() {
         order: 'asc',
       },
     })
+    console.log('********');
+    console.log(questions);
+    console.log('--------');
 
     if (questions.length === 0) {
       return (
