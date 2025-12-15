@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { InputJsonArray } from '@prisma/client/runtime/library'
 
 export async function POST(request: NextRequest) {
   try {
@@ -24,7 +25,7 @@ export async function POST(request: NextRequest) {
         data: {
           submissionId: submission.id,
           questionId: parseInt(questionId, 10),
-          value: value,
+          value: value as string,
         },
       })
     })
