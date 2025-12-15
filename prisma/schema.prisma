@@ -14,6 +14,7 @@ datasource db {
 // 質問形式の列挙型
 enum QuestionType {
   MULTIPLE_CHOICE  // 複数選択（チェックボックス）
+  SINGLE_CHOICE    // 単一選択（ラジオボタン）
   FREE_TEXT        // 自由記述
 }
 

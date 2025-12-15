@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Textarea } from '@/components/ui/textarea'
 
 interface SurveyFormProps {
@@ -35,6 +36,10 @@ export function SurveyForm({ questions }: SurveyFormProps) {
   }
 
   const handleTextChange = (questionId: number, value: string) => {
+    setAnswers((prev) => ({ ...prev, [questionId]: value }))
+  }
+
+  const handleRadioChange = (questionId: number, value: string) => {
     setAnswers((prev) => ({ ...prev, [questionId]: value }))
   }
 
@@ -94,6 +99,28 @@ export function SurveyForm({ questions }: SurveyFormProps) {
                   </div>
                 ))}
               </div>
+            )}
+
+            {question.type === QuestionType.SINGLE_CHOICE && question.options && (
+              <RadioGroup
+                value={(answers[question.id] as string) || ''}
+                onValueChange={(value) => handleRadioChange(question.id, value)}
+              >
+                {(question.options as string[]).map((option) => (
+                  <div key={option} className="flex items-center space-x-2">
+                    <RadioGroupItem
+                      value={option}
+                      id={`q${question.id}-${option}`}
+                    />
+                    <Label
+                      htmlFor={`q${question.id}-${option}`}
+                      className="text-sm font-normal cursor-pointer"
+                    >
+                      {option}
+                    </Label>
+                  </div>
+                ))}
+              </RadioGroup>
             )}
 
             {question.type === QuestionType.FREE_TEXT && (

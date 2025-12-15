@@ -83,7 +83,7 @@ export function SurveyResults() {
             </p>
           </CardHeader>
           <CardContent>
-            {question.type === QuestionType.MULTIPLE_CHOICE ? (
+            {question.type === QuestionType.MULTIPLE_CHOICE || question.type === QuestionType.SINGLE_CHOICE ? (
               <div className="space-y-4">
                 {(question.data as MultipleChoiceData[]).map((item) => (
                   <div key={item.option} className="space-y-2">

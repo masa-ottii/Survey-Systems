@@ -49,6 +49,37 @@ export async function GET() {
               : 0,
           })),
         }
+      } else if (question.type === QuestionType.SINGLE_CHOICE) {
+        // 単一選択の場合：各選択肢の集計
+        const options = question.options as string[]
+        const counts: Record<string, number> = {}
+
+        // 初期化
+        options.forEach((option) => {
+          counts[option] = 0
+        })
+
+        // 集計（MULTIPLE_CHOICEと異なり、valueは文字列）
+        question.answers.forEach((answer) => {
+          const selectedOption = answer.value as string
+          if (counts[selectedOption] !== undefined) {
+            counts[selectedOption]++
+          }
+        })
+
+        return {
+          id: question.id,
+          text: question.text,
+          type: question.type,
+          totalResponses: question.answers.length,
+          data: Object.entries(counts).map(([option, count]) => ({
+            option,
+            count,
+            percentage: question.answers.length > 0
+              ? Math.round((count / question.answers.length) * 100)
+              : 0,
+          })),
+        }
       } else {
         // 自由記述の場合：すべての回答をリスト化
         const responses = question.answers.map((answer) => answer.value as string)
